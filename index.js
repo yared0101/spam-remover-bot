@@ -16,22 +16,6 @@ const helpCommand = require("./src/commands/help");
 const { helpStrings } = require("./config");
 
 helpCommand(bot);
-bot.use(async (ctx, next) => {
-    const a = await bot.telegram.createChatInviteLink("@spam_prob_group", {
-        creates_join_request: true,
-    });
-    ctx.reply(a.invite_link);
-    console.log(a.creates_join_request, a.pending_join_request_count);
-    next();
-});
-bot.on("chat_member", (ctx) => {
-    console.log("-----------------------------");
-    console.log(ctx);
-    console.log("-----------------------------");
-    console.log(ctx.update.chat_member.new_chat_member);
-    console.log("-----------------------------");
-});
-
 bot.on("new_chat_members", async (ctx) => {
     console.log(ctx?.update?.message?.new_chat_member);
     console.log(ctx);
@@ -164,5 +148,5 @@ const spamChecker = async (text, ctx) => {
     // return detect(text) === "spam";
 };
 // module.exports = bot;
-bot.launch({ allowedUpdates: ["chat_member"] });
+bot.launch();
 console.log("started");
